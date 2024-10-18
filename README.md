@@ -6,3 +6,5 @@ OWC 2024 Quarterfinals Tiebreaker -> Song Title：Whiteout
 *Illustrations*: Mimiliaa, Alptraum    
 *Graphics*: AlexDunk     
 *Storyboarders*: binarie, Himada       
+## Storyboard files    
+All files can be accessed inside the Genkaku Aria - Whiteout folder  
