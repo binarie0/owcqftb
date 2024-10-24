@@ -9,7 +9,7 @@ using StorybrewCommon.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using SBImageLib;
 namespace StorybrewScripts
 {
     /*
@@ -60,6 +60,8 @@ namespace StorybrewScripts
             {
                 letterbox.Color(StartTime, Color4.Black);
             }
+
+            
 
             //changes in height
             letterbox.ScaleVec(OsbEasing.OutSine, 9225, 12917, width, LetterboxHeight, width, LetterboxHeight*2);
