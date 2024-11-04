@@ -25,11 +25,33 @@ namespace StorybrewScripts
 
         public override void Generate()
         {
-            if (StartTime == EndTime) return;
+            //frame animation
             float frameAnim = (float)Beatmap.GetTimingPointAt(StartTime).BeatDuration*0.5f;
+            //instantiate layer
             Layer = GetLayer("Scene 1");
 
+            OsbSprite bg = Layer.CreateSprite("sb/bg/background.jpg", OsbOrigin.Centre);
+            bg.Fade(StartTime, 1);
+            bg.Fade(EndTime, 0);
+            bg.Scale(OsbEasing.OutSine, StartTime, 5533, 0.5, 0.45);
+            bg.MoveX(OsbEasing.OutCirc, StartTime, 5533, 370, 320);
 
+            OsbSprite haze = Layer.CreateSprite("sb/bg/haze.png", OsbOrigin.Centre);
+            haze.Fade(StartTime, Random(0.6, 1));
+            haze.Scale(StartTime, 0.5);
+            haze.Scale(EndTime, 0);
+            int i = StartTime, i2;
+            float dO;
+            while (i < EndTime)
+            {
+                dO = Random(0f, 0.1f);
+                i2 = Random(1000, 1500);
+                if (haze.OpacityAt(i) > 0.8) dO *= -1;
+
+                haze.Fade(i, i + i2, haze.OpacityAt(i), haze.OpacityAt(i) + dO);
+
+                i += i2;
+            }
 
             // OVERLAYS
 
@@ -73,9 +95,22 @@ namespace StorybrewScripts
 
             #endregion
             
+            #region Transition
+            OsbSprite black = Layer.CreateSprite("sb/1px.png", OsbOrigin.Centre);
+            black.Fade(StartTime, 5533, 0.8, 0);
+            black.ScaleVec(StartTime, 854, 480);
+            black.Color(StartTime, Color4.Black);
+            black.Fade(OsbEasing.OutSine, 9225, 12917, 0, 0.4);
+            black.Fade(EndTime, 0);
+            
+
+            #endregion
+            #region OWC Logo
             OsbSprite owclogo = Layer.CreateSprite("sb/wc-diamond-2024.png", OsbOrigin.Centre);
             owclogo.Scale(OsbEasing.OutSine, 9225, 12917, 0.4, 0.5);
             owclogo.Fade(EndTime, EndTime, 1, 0);
+
+            #endregion
             
         }
     }
