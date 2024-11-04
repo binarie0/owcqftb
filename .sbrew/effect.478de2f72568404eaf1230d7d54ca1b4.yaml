@@ -21,7 +21,7 @@ Config:
     DisplayName: "End Time"
   Debug:
     Type: "System.Boolean"
-    Value: "True"
+    Value: "False"
     DisplayName: "Debug (for all black background)"
   RandomSeed:
     Type: "System.Int32"
@@ -31,6 +31,6 @@ Config:
 Layers:
   78d43df8af2e42daa19b11350d2e2c38:
     Name: "Letterbox Overlay"
-    OsbLayer: Background
+    OsbLayer: Foreground
     DiffSpecific: No
     Visible: Yes

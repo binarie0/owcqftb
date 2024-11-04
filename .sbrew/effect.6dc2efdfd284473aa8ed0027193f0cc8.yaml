@@ -1,0 +1,24 @@
+﻿FormatVersion: 7
+Name: "Scene1 1"
+Script: "Scene1"
+Multithreaded: No
+Config:
+  StartTime:
+    Type: "System.Int32"
+    Value: "1840"
+    DisplayName: "Start Time"
+  EndTime:
+    Type: "System.Int32"
+    Value: "14763"
+    DisplayName: "End Time"
+  RandomSeed:
+    Type: "System.Int32"
+    Value: "0"
+    DisplayName: "Random Seed"
+    BeginsGroup: "Common"
+Layers:
+  216cff132cd34a1094359a9d771ae8d0:
+    Name: "Scene 1"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
