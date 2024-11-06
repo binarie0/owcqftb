@@ -1,0 +1,28 @@
+﻿FormatVersion: 7
+Name: "InstrumentalScene 2"
+Script: "InstrumentalScene"
+Multithreaded: No
+Config:
+  StartTime:
+    Type: "System.Int32"
+    Value: "113417"
+    DisplayName: "Start Time"
+  EndTime:
+    Type: "System.Int32"
+    Value: "131879"
+    DisplayName: "End Time"
+  IncludeTextOverlay:
+    Type: "System.Boolean"
+    Value: "False"
+    DisplayName: "With Text Overlay"
+  RandomSeed:
+    Type: "System.Int32"
+    Value: "234"
+    DisplayName: "Random Seed"
+    BeginsGroup: "Common"
+Layers:
+  bca78c9318a6455fa5e9b8c29441f1bf:
+    Name: "Instrumental Scene (113417 to 131879)"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
