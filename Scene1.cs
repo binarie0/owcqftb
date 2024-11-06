@@ -10,6 +10,7 @@ using StorybrewCommon.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Schema;
 
 namespace StorybrewScripts
 {
@@ -60,7 +61,7 @@ namespace StorybrewScripts
 
             #region Background
             OsbSprite bg = Layer.CreateSprite("sb/bg/background.jpg", OsbOrigin.Centre);
-            bg.Fade(StartTime, 1);
+            bg.Fade(StartTime, 0.6);
             bg.Fade(BGChangeTime, 0);
             bg.Scale(OsbEasing.OutSine, StartTime, 5533, 0.5, 0.45);
             bg.MoveX(OsbEasing.OutCirc, StartTime, 5533, 370, 320); 
@@ -81,7 +82,7 @@ namespace StorybrewScripts
             trees.Scale(OsbEasing.OutSine, TransitionTime, 15687, 0.45, 0.5);
 
             OsbSprite haze = Layer.CreateSprite("sb/bg/haze.png", OsbOrigin.Centre);
-            haze.Fade(StartTime, Random(0.6, 1));
+            haze.Fade(StartTime, Random(0.4, 0.6));
             haze.Scale(StartTime, 0.5);
             haze.Scale(BGChangeTime, 0);
             int i = StartTime, i2;
@@ -90,7 +91,7 @@ namespace StorybrewScripts
             {
                 dO = Random(0f, 0.1f);
                 i2 = Random(1000, 1500);
-                if (haze.OpacityAt(i) > 0.8) dO *= -1;
+                if (haze.OpacityAt(i) > 0.6) dO *= -1;
 
                 haze.Fade(i, i + i2, haze.OpacityAt(i), haze.OpacityAt(i) + dO);
 
@@ -108,15 +109,29 @@ namespace StorybrewScripts
                 dTime = Random(1200, 1800);
                 dx = Random(mediandx - deviationx, mediandx + deviationx);
 
-                x = Random(-107, 747);
+                x = Random(-207, 747);
                 OsbSprite particle = Layer.CreateSprite("sb/p.png", OsbOrigin.Centre);
                  
 
-                particle.Fade(StartTime, Random(0.1, 1));
+                particle.Fade(StartTime, StartTime, 0, Random(0.1, 1));
                 particle.Fade(BGChangeTime, 0);
                 particle.Scale(StartTime, Random(0.04, 0.15));
-                particle.StartLoopGroup(StartTime, (BGChangeTime - StartTime) / dTime + 1);
+                particle.StartLoopGroup(StartTime - Random(0, dTime), (BGChangeTime - StartTime) / dTime + 1);
                     particle.Move(0, dTime, x, 0, x + dx, 480);
+                particle.EndGroup();
+            }
+
+            for (int p = 0; p < 160; p++)
+            {
+                dTime = Random(1600, 2400);
+                x = Random(-157, 797);
+                
+                OsbSprite particle = Layer.CreateSprite("sb/p.png", OsbOrigin.Centre);
+                particle.Fade(BGChangeTime, BGChangeTime, 0, Random(0.1, 1));
+                particle.Fade(EndTime, 0);
+                particle.Scale(BGChangeTime, Random(0.02, 0.15));
+                particle.StartLoopGroup(BGChangeTime - Random(0, dTime), (EndTime - BGChangeTime) / dTime + 1);
+                    particle.Move(0, dTime, x, 0, x +(320 - x)*0.1, 480);
                 particle.EndGroup();
             }
             #endregion
