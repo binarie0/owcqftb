@@ -159,7 +159,7 @@ namespace StorybrewScripts
             flare2.EndGroup();
             
             flare2.Additive(StartTime);
-            flare2.Scale(StartTime, TransitionTime, 0.45, 0.5);
+            flare2.Scale(StartTime, TransitionTime, 0.47, 0.5);
             flare2.MoveX(StartTime, TransitionTime, 310, 335);
             flare2.MoveY(StartTime, TransitionTime, 220, 240);
             OsbAnimation noise = Layer.CreateAnimation("sb/noise/mono/n.jpg", 8, 

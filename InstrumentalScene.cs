@@ -1,5 +1,6 @@
 using OpenTK;
 using OpenTK.Graphics;
+using OpenTK.Graphics.ES11;
 using StorybrewCommon.Mapset;
 using StorybrewCommon.Scripting;
 using StorybrewCommon.Storyboarding;
@@ -39,6 +40,7 @@ namespace StorybrewScripts
 
             Part1();
             Part2();
+            Part3();
             
             #region Overlays
 
@@ -72,7 +74,39 @@ namespace StorybrewScripts
             transition.Fade(P1EndTime, P1EndTime + BeatDuration*4, 0.5, 0);
             transition.ScaleVec(P1EndTime, 854, 480);
         }
-        internal void P1ParticleEffect(int ct, double factor)
+        internal void Part3()
+        {
+            OsbSprite color = Layer.CreateSprite("sb/bg/bg1color.png", OsbOrigin.Centre);
+            color.Fade(P2EndTime, 0.5);
+            color.Fade(EndTime, 0);
+            color.Scale(P2EndTime, 0.45);
+            OsbSprite background = Layer.CreateSprite("sb/bg/bg1mountains.png", OsbOrigin.Centre);
+            background.Fade(P2EndTime, 1);
+            background.Fade(EndTime, 0);
+            background.Scale(P2EndTime, 0.48);
+            background.MoveX(OsbEasing.OutSine, P2EndTime, EndTime, 330, 320);
+
+            OsbSprite haze = Layer.CreateSprite("sb/bg/haze.png", OsbOrigin.Centre);
+            haze.Fade(P2EndTime, 1);
+            haze.Fade(EndTime, 0);
+            haze.Scale(P2EndTime, 0.48);
+            haze.MoveX(OsbEasing.OutSine, P2EndTime, EndTime, 335, 315);
+
+            P1ParticleEffect(80, 0.1, P2EndTime, EndTime);
+            OsbSprite foreground = Layer.CreateSprite("sb/bg/bg1foreground.png", OsbOrigin.Centre);
+            foreground.Fade(P2EndTime, 1);
+            foreground.Fade(EndTime, 0);
+            foreground.Scale(P2EndTime, 0.5);
+            foreground.MoveX(OsbEasing.OutSine, P2EndTime, EndTime, 370, 340);
+
+            P1ParticleEffect(120, 0.15, P2EndTime, EndTime);
+            OsbSprite tree = Layer.CreateSprite("sb/bg/bg1fronttree.png", OsbOrigin.Centre);
+            tree.Fade(P2EndTime, 1);
+            tree.Fade(EndTime, 0);
+            tree.Scale(P2EndTime, 0.56);
+            tree.MoveX(OsbEasing.OutSine, P2EndTime, EndTime, 440, 310);
+        }
+        internal void P1ParticleEffect(int ct, double factor, double start, double end)
         {
             for (int i = 0; i < ct; i++)
             {
@@ -81,13 +115,13 @@ namespace StorybrewScripts
                 double scale = 1000/time * factor;
                 int x = Random(-257, 747);
                 int dx = Random(50, 200);
-                p.Fade(StartTime, StartTime, 0, 1);
-                p.Fade(P1EndTime, P1EndTime, 1, 0);
-                p.Scale(StartTime, scale);
-                p.StartLoopGroup(StartTime - Random(0, time), (int)((P1EndTime - StartTime) / time) + 2);
+                p.Fade(start, start, 0, 1);
+                p.Fade(end, end, 1, 0);
+                p.Scale(start, scale);
+                p.StartLoopGroup(start - Random(0, time), (int)((end - start) / time) + 2);
                     p.Move(0, time, x, 0, x + dx, 480);
                 p.EndGroup();
-                p.Additive(StartTime);
+                p.Additive(start);
             }
         }
         internal void P2ParticleEffect(int ct, double factor)
@@ -164,7 +198,7 @@ namespace StorybrewScripts
             foreground.Scale(StartTime, 0.5);
             foreground.MoveX(OsbEasing.OutSine, StartTime, P1EndTime, 300, 330);
 
-            P1ParticleEffect(240, 0.2);
+            P1ParticleEffect(240, 0.2, StartTime, P1EndTime);
 
             OsbSprite tree = Layer.CreateSprite("sb/bg/bg1fronttree.png", OsbOrigin.Centre);
             tree.Fade(StartTime, 1);
@@ -172,7 +206,7 @@ namespace StorybrewScripts
             tree.Scale(StartTime, 0.5);
             tree.MoveX(OsbEasing.OutSine, StartTime, P1EndTime, 230, 330);
 
-            P1ParticleEffect(50, 0.45);
+            P1ParticleEffect(50, 0.45, StartTime, P1EndTime);
             #endregion
         }
     }
