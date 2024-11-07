@@ -68,6 +68,11 @@ namespace StorybrewScripts
 
             letterbox.ScaleVec(OsbEasing.OutCirc, 14763, 15687, width, LetterboxHeight*2, width, LetterboxHeight);
 
+
+
+            //ENDING
+            letterbox.ScaleVec(OsbEasing.OutSine, 309109, EndTime, width, LetterboxHeight, width, 0);
+
         }
     }
 }

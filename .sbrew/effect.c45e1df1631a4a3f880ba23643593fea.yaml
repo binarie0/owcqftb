@@ -17,7 +17,7 @@ Config:
     DisplayName: "With Text Overlay"
   RandomSeed:
     Type: "System.Int32"
-    Value: "0"
+    Value: "9"
     DisplayName: "Random Seed"
     BeginsGroup: "Common"
 Layers:
