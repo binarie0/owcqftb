@@ -135,7 +135,8 @@ namespace StorybrewScripts
                 int dx = Random(20, 70);
                 p.Fade(P1EndTime, P1EndTime, 0, 1);
                 p.Fade(P2EndTime, P2EndTime, 1, 0);
-                p.Scale(StartTime, scale);
+                p.ScaleVec(StartTime, scale*Random(0.1, 0.5), scale);
+                p.Rotate(StartTime, Math.Atan2(x < 320 ? -dx:dx, 480));
                 p.StartLoopGroup(P1EndTime - Random(0, time), (int)((P2EndTime - P1EndTime) / time) + 2);
                     p.Move(0, time, x, 0, x + (x < 320 ? dx:-dx), 480);
                 p.EndGroup();
@@ -151,11 +152,13 @@ namespace StorybrewScripts
             bg.Fade(P2EndTime, 0);
             bg.Scale(OsbEasing.OutSine, P1EndTime, P2EndTime, 0.5, 0.45);
             bg.MoveY(OsbEasing.OutSine, P1EndTime, P2EndTime, 260, 240);
+            
 
             OsbSprite haze = Layer.CreateSprite("sb/bg/bg2haze.png", OsbOrigin.Centre);
             haze.Fade(P1EndTime, 1);
             haze.Fade(P2EndTime, 0);
             haze.Scale(OsbEasing.OutSine, P1EndTime, P2EndTime, 0.52, 0.45);
+            
             
             P2ParticleEffect(50, 0.2);
 
@@ -170,6 +173,7 @@ namespace StorybrewScripts
             girl.Fade(P1EndTime, 1);
             girl.Fade(P2EndTime, 0);
             girl.Scale(OsbEasing.OutSine, P1EndTime, P2EndTime, 0.6, 0.45);
+            girl.FlipH(P1EndTime);
             
             P2ParticleEffect(50, 0.3);
 

@@ -202,12 +202,7 @@ namespace StorybrewScripts
             
 
             #endregion
-            #region OWC Logo
-            OsbSprite owclogo = Layer.CreateSprite("sb/wc-diamond-2024.png", OsbOrigin.Centre);
-            owclogo.Scale(OsbEasing.OutSine, BGChangeTime, 12917, 0.4, 0.5);
-            owclogo.Fade(13840, TransitionTime, 1, 0);
-
-            #endregion
+            
             
         }
     }
