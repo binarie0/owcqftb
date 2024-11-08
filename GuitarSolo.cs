@@ -78,12 +78,13 @@ namespace StorybrewScripts
             flare1.Fade(EndTime, 0);
             flare1.Scale(StartTime, 0.5);
             flare1.MoveX(StartTime, EndTime, 320, 300);
-
+        
             OsbSprite flare2 = Layer.CreateSprite("sb/flares/2.png", OsbOrigin.Centre);
             flare2.StartLoopGroup(StartTime, 9);
                 flare2.Fade(0, (EndTime - StartTime) / 18, 0.54, 0.58);
                 flare2.Fade((EndTime - StartTime) / 12, (EndTime - StartTime) / 9, 0.60, 0.56);
             flare2.EndGroup();
+            flare2.FlipH(StartTime);
 
             flare2.StartLoopGroup(StartTime, 4);
                 flare2.Color(0, (EndTime - StartTime) / 6, Color4.White, Color4.Red);

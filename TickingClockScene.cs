@@ -125,6 +125,7 @@ namespace StorybrewScripts
 
             fadein.Fade(EndTime - BeatDuration*2, EndTime, 0, 0.4);
             fadein.Color(EndTime - BeatDuration*2, Color4.White);
+            fadein.Fade(EndTime, EndTime + BeatDuration*4, 0.8, 0);
         }
     internal void Particles(int ct, double minscale, double maxscale, double opacity)
     {
