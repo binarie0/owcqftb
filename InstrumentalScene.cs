@@ -152,6 +152,7 @@ namespace StorybrewScripts
             bg.Fade(P2EndTime, 0);
             bg.Scale(OsbEasing.OutSine, P1EndTime, P2EndTime, 0.5, 0.45);
             bg.MoveY(OsbEasing.OutSine, P1EndTime, P2EndTime, 260, 240);
+            bg.Additive(P1EndTime, P2EndTime);
             
 
             OsbSprite haze = Layer.CreateSprite("sb/bg/bg2haze.png", OsbOrigin.Centre);
@@ -193,6 +194,7 @@ namespace StorybrewScripts
             bg.Fade(P1EndTime, 0);
             bg.Scale(StartTime, 0.5);
             bg.MoveX(OsbEasing.OutSine, StartTime, P1EndTime, 310, 320);
+            bg.Additive(P1EndTime, P1EndTime);
 
             
 
@@ -201,6 +203,7 @@ namespace StorybrewScripts
             foreground.Fade(P1EndTime, 0);
             foreground.Scale(StartTime, 0.5);
             foreground.MoveX(OsbEasing.OutSine, StartTime, P1EndTime, 300, 330);
+            //foreground.Additive(P1EndTime, P1EndTime);
 
             P1ParticleEffect(240, 0.2, StartTime, P1EndTime);
 
@@ -209,6 +212,7 @@ namespace StorybrewScripts
             tree.Fade(P1EndTime, 0);
             tree.Scale(StartTime, 0.5);
             tree.MoveX(OsbEasing.OutSine, StartTime, P1EndTime, 230, 330);
+            //tree.Additive(P1EndTime, P1EndTime);
 
             P1ParticleEffect(50, 0.45, StartTime, P1EndTime);
             #endregion
