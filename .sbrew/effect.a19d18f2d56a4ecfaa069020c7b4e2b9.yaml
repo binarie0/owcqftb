@@ -1,0 +1,24 @@
+﻿FormatVersion: 7
+Name: "AfterVocalsScenes 1"
+Script: "AfterVocalsScenes"
+Multithreaded: No
+Config:
+  StartTime:
+    Type: "System.Int32"
+    Value: "51687"
+    DisplayName: "Start Time"
+  EndTime:
+    Type: "System.Int32"
+    Value: "63687"
+    DisplayName: "End Time"
+  RandomSeed:
+    Type: "System.Int32"
+    Value: "0"
+    DisplayName: "Random Seed"
+    BeginsGroup: "Common"
+Layers:
+  e2ed91512d56421b97d0aa65cd8b68cc:
+    Name: "After Vocals Scene (51687 - 63687)"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes

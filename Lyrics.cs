@@ -136,7 +136,8 @@ namespace StorybrewScripts
             generateBlackBackgroundLyrics("再会を予期してた", 47475, 51687); //changed from 52148 for better transition
 
             
-            generateLyrics("Last sweet memory", 52148, 55379);
+            generateBackdroppedEnglishLyrics("Last sweet memory", 52148, 55379);
+
             #endregion
             generateLyrics("待つことに", 64090, 65994);
             generateLyrics("慣れすぎて", 65994, 67840);
@@ -198,6 +199,52 @@ namespace StorybrewScripts
             generateLyrics("Whiteout", 287994, 289840);
 
             
+        }
+        internal void generateBackdroppedEnglishLyrics(string text, int startTime, int endTime)
+        {
+            //generateBlackBackgroundEnglishLyrics(text, startTime, endTime, 180, -10);
+            generateBlackBackgroundEnglishLyrics(text, startTime + BeatDuration*0.125, endTime  + BeatDuration*0.125, 240, -10);
+            //generateBlackBackgroundEnglishLyrics(text, startTime + BeatDuration*0.25, endTime  + BeatDuration*0.25, 300, -10);
+        }
+        
+        internal void generateBlackBackgroundEnglishLyrics(string text, double startTime, double endTime, int y, int dy)
+        {
+            double scale = 0.3;
+            FontTexture texture = fontGenerator.GetTexture(text);
+            char[] extensions = "qypg".ToCharArray();
+            bool extendBottom = false;
+            foreach (char c in extensions)
+            {
+                if (!extendBottom && text.Contains(c)) 
+                {
+                    extendBottom = true;
+
+                }
+            }
+
+            double scaleX = texture.Width * 1.5 * scale,
+                    scaleY = texture.Height * scale;
+            
+            
+            
+            OsbSprite backing = Layer.CreateSprite("sb/1px.png", OsbOrigin.Centre);
+            backing.Fade(startTime, 1);
+            backing.Fade(endTime, 0);
+            backing.Color(startTime, Color4.Black);
+            backing.ScaleVec(startTime, scaleX * 1.1, scaleY);
+            backing.MoveY(OsbEasing.OutCirc, startTime, startTime + BeatDuration, y + dy, y);
+            backing.MoveY(OsbEasing.InCirc, endTime - BeatDuration, endTime, y, y - dy);
+            
+            if (extendBottom) y += 5;
+            OsbSprite a = Layer.CreateSprite(texture.Path);
+            a.Fade(startTime, 1);
+            a.Fade(endTime, 0);
+            a.MoveY(OsbEasing.OutCirc, startTime, startTime + BeatDuration, y + dy, y);
+            a.MoveY(OsbEasing.InCirc, endTime - BeatDuration, endTime, y, y - dy);
+            a.ScaleVec(startTime, scale * 1.5, scale);
+            //a.Color(startTime, Color4.Black);
+
+
         }
         internal void generateFullColorLyrics(string text, int startTime, int endTime)
         {
