@@ -3,6 +3,7 @@ using OpenTK.Graphics;
 using StorybrewCommon.Mapset;
 using StorybrewCommon.Scripting;
 using StorybrewCommon.Storyboarding;
+using StorybrewCommon.Storyboarding.Commands;
 using StorybrewCommon.Storyboarding.Util;
 using StorybrewCommon.Subtitles;
 using StorybrewCommon.Util;
@@ -10,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace StorybrewScripts
 {
@@ -139,13 +141,27 @@ namespace StorybrewScripts
             generateBackdroppedEnglishLyrics("Last sweet memory", 52148, 55379);
 
             #endregion
-            generateLyrics("待つことに", 64090, 65994);
-            generateLyrics("慣れすぎて", 65994, 67840);
-            generateLyrics("痛みさえ感じないの", 67840, 71533);
-            generateLyrics("麻痺してる", 71533, 73379);
-            generateLyrics("焦がれてる", 73379, 75225);
-            generateLyrics("冷え切った体温が", 75225, 78225);
-            generateLyrics("また求めてる", 78225, 82148);
+            //#region Chorus Buildup?
+            generateBuildupLyrics("待つことに", 64494, 65533);
+            generateBlackBackgroundLyrics("待つことに", 64090, 65994);
+
+            generateBuildupLyrics("慣れすぎて", 66340, 67379);
+            generateBlackBackgroundLyrics("慣れすぎて", 65994, 67840);
+
+            generateFullColorLyrics("痛みさえ感じないの", 68187, 71533);
+            generateBlackBackgroundLyrics("痛みさえ感じないの", 67840, 71533);
+
+            generateBuildupLyrics("麻痺してる", 71879, 72917);
+            generateBlackBackgroundLyrics("麻痺してる", 71533, 73379);
+
+            generateBuildupLyrics("焦がれてる", 73725, 74763);
+            generateBlackBackgroundLyrics("焦がれてる", 73379, 75225);
+
+            generateFullColorLyrics("冷え切った体温が", 75571, 78225);
+            generateBlackBackgroundLyrics("冷え切った体温が", 75225, 78225);
+
+            generateFullColorLyrics("また求めてる", 78225, 82148);
+            generateBlackBackgroundLyrics("また求めてる", 78225, 82148);
 
             generateLyrics("視界ゼロの中あなたと", 82610, 86302);
             generateLyrics("繋いだ手の温もりが恋しくて", 86302, 89994);
@@ -198,6 +214,45 @@ namespace StorybrewScripts
             generateLyrics("悪魔の手招き", 286609, 287994);
             generateLyrics("Whiteout", 287994, 289840);
 
+            
+        }
+        internal void generateBuildupLyrics(string text, int startTime, int endTime)
+        {
+            LyricGroup group = GetLyricGroup(text, fontGenerator2);
+            double scale = 0.5;
+            double y = 0;
+            double x;
+            int i = 0;
+            int time = 4000;
+            bool goRight = true;
+            while (y < 480)
+            {
+                x = -107 - (goRight ? group.TotalWidth*scale:0);
+                i = Random(0, group.Textures.Length);
+                while (x < 747)
+                {
+                    
+                    for (;i < group.Textures.Length; i++)
+                    {
+                        OsbSprite p = Layer.CreateSprite(group.Textures[i].Path, OsbOrigin.TopLeft);
+                        p.Additive(startTime);
+                        p.Scale(startTime, scale);
+                        p.Fade(OsbEasing.InBounce, startTime, startTime + BeatDuration, 0, 0.2);
+                        p.Fade(OsbEasing.InBounce, endTime - BeatDuration, endTime, 0.2, 0);
+                        p.StartLoopGroup(startTime, (endTime - startTime)/time + 1);
+                            p.MoveX(0, time, x, x + group.TotalWidth*scale*(goRight ? 1:-1));
+                        p.EndGroup();
+                        p.MoveY(startTime, y);
+
+                        x += group.Textures[i].Width * scale;
+                        if (x > 747 + (goRight ? 0:group.TotalWidth *scale)) break;
+                    }
+                    i = 0;
+                    
+                }
+                goRight = !goRight;
+                y += group.MaxHeight*scale;
+            }
             
         }
         internal void generateBackdroppedEnglishLyrics(string text, int startTime, int endTime)
@@ -332,6 +387,7 @@ namespace StorybrewScripts
             LyricGroup ret = new LyricGroup();
             ret.Text = text;
             double width = 0;
+            double height = 0;
             FontTexture[] textureArray = new FontTexture[text.Length];
             for (int i = 0 ; i < text.Length; i++)
             {
@@ -343,10 +399,10 @@ namespace StorybrewScripts
                 else {
                     textureArray[i] = gen.GetTexture(text.Substring(i, 1));
                     width += textureArray[i].Width;
-                    
+                    height = (textureArray[i].Height > height) ? textureArray[i].Height : height;
                 }
             }
-
+            ret.MaxHeight = height;
             ret.Textures = textureArray;
             ret.TotalWidth = width;
 
@@ -359,6 +415,8 @@ namespace StorybrewScripts
             internal FontTexture[] Textures;
             internal double TotalWidth;
             internal string Text;
+
+            internal double MaxHeight;
 
             
         }
