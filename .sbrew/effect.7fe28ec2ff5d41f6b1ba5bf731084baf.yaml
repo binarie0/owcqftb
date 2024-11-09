@@ -11,6 +11,10 @@ Config:
     Type: "System.Int32"
     Value: "168917"
     DisplayName: "End Time"
+  IncludeEndScene:
+    Type: "System.Boolean"
+    Value: "False"
+    DisplayName: "Include End Scene"
   RandomSeed:
     Type: "System.Int32"
     Value: "0"
