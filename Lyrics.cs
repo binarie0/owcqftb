@@ -202,10 +202,11 @@ namespace StorybrewScripts
         }
         internal void generateBackdroppedEnglishLyrics(string text, int startTime, int endTime)
         {
-            //generateBlackBackgroundEnglishLyrics(text, startTime, endTime, 180, -10);
+            
             generateBlackBackgroundEnglishLyrics(text, startTime + BeatDuration*0.125, endTime  + BeatDuration*0.125, 240, -10);
-            //generateBlackBackgroundEnglishLyrics(text, startTime + BeatDuration*0.25, endTime  + BeatDuration*0.25, 300, -10);
+            
         }
+        //internal 
         
         internal void generateBlackBackgroundEnglishLyrics(string text, double startTime, double endTime, int y, int dy)
         {
@@ -251,37 +252,23 @@ namespace StorybrewScripts
             
             double scale = 0.75;
             
-            double width = 0, height = 0;
+            double height = 0;
             
-            
-            FontTexture[] textureArray = new FontTexture[text.Length];
-            for (int i = 0 ; i < text.Length; i++)
-            {
-                if (text[i] == ' ')
-                {
-                    textureArray[i] = null;
-                    width += textureArray[i-1].Width * 1.5;
-                }
-                else
-                {
-                    textureArray[i] = fontGenerator2.GetTexture(text.Substring(i, 1));
-                    width += textureArray[i].Width;
-                    height = textureArray[i].Height > height ? textureArray[i].Height : height;
-                }
-            }
-
+            LyricGroup group = GetLyricGroup(text, fontGenerator2);
+            double width = group.TotalWidth;
             width *= scale;
-            height *= scale;
+            
+            
             
             double startx = 320 - width*0.5;
             double currentX = startx;
             int startDY = 4;
             for (int i = 0; i < text.Length; i++)
             {
-                if (textureArray[i] == null) continue;
+                if (group.Textures[i] == null) continue;
                 startDY *= -1;
                 
-                OsbSprite p = Layer.CreateSprite(textureArray[i].Path, OsbOrigin.CentreLeft);
+                OsbSprite p = Layer.CreateSprite(group.Textures[i].Path, OsbOrigin.CentreLeft);
                 p.MoveX(startTime, currentX);
                 p.MoveY(OsbEasing.OutCirc, startTime, startTime + BeatDuration*2, 240 + startDY, 240);
                 if (startTime + BeatDuration*2 < endTime - BeatDuration*2)
@@ -291,46 +278,34 @@ namespace StorybrewScripts
                 p.Scale(startTime, scale);
                 p.Additive(startTime);
                 
-                currentX += textureArray[i].Width*scale;
+                currentX += group.Textures[i].Width*scale;
             }
         }
         internal void generateBlackBackgroundLyrics(string text, int startTime, int endTime)
         {
             double scale = 0.5;
             int startDY = -4;
-            double width = 0, height = 55 * 0.4/scale;
+            double height = 55 * 0.4/scale;
             OsbSprite backing = Layer.CreateSprite("sb/1px.png", OsbOrigin.Centre);
             backing.Fade(startTime, 1);
             backing.Fade(endTime, 0);
             backing.Color(startTime, Color4.Black);
             
-            FontTexture[] textureArray = new FontTexture[text.Length];
-            for (int i = 0 ; i < text.Length; i++)
-            {
-                if (text[i] == ' ')
-                {
-                    textureArray[i] = null;
-                    width += textureArray[i-1].Width * 1.5;
-                }
-                else {
-                    textureArray[i] = fontGenerator.GetTexture(text.Substring(i, 1));
-                    width += textureArray[i].Width * 1.5;
-                    
-                }
-            }
+            LyricGroup group = GetLyricGroup(text, fontGenerator);
 
-            width *= scale;
+            double width = group.TotalWidth;
+            FontTexture startTexture = group.Textures[0];
             
 
             
             backing.ScaleVec(OsbEasing.OutCirc, startTime, startTime + BeatDuration, width*1.05, height*1.25, width*1.1, height*1.25);
-            double startx = 320 - width*0.5 + textureArray[0].Width*scale*0.75;
+            double startx = 320 - width*0.5 + startTexture.Width*scale*0.75;
             
             for (int i = 0; i < text.Length; i++)
             {
-                if (textureArray[i] == null) continue;
+                if (group.Textures[i] == null) continue;
                 startDY *= -1;
-                OsbSprite p = Layer.CreateSprite(textureArray[i].Path, OsbOrigin.Centre);
+                OsbSprite p = Layer.CreateSprite(group.Textures[i].Path, OsbOrigin.Centre);
                 p.MoveX(startTime, startx + (width / (text.Length))*i);
                 p.MoveY(OsbEasing.OutCirc, startTime, startTime + BeatDuration, 240 + startDY, 240);
                 p.MoveY(OsbEasing.InCirc, endTime - BeatDuration, endTime, 240, 240 - startDY);
@@ -351,6 +326,41 @@ namespace StorybrewScripts
             line.ScaleVec(startTime, 0.4, 0.3);
             line.Fade(endTime, 0);
 
+        }
+        internal LyricGroup GetLyricGroup(string text, FontGenerator gen)
+        {
+            LyricGroup ret = new LyricGroup();
+            ret.Text = text;
+            double width = 0;
+            FontTexture[] textureArray = new FontTexture[text.Length];
+            for (int i = 0 ; i < text.Length; i++)
+            {
+                if (text[i] == ' ')
+                {
+                    textureArray[i] = null;
+                    width += textureArray[i-1].Width;
+                }
+                else {
+                    textureArray[i] = gen.GetTexture(text.Substring(i, 1));
+                    width += textureArray[i].Width;
+                    
+                }
+            }
+
+            ret.Textures = textureArray;
+            ret.TotalWidth = width;
+
+            return ret;
+        }
+
+
+        internal class LyricGroup
+        {
+            internal FontTexture[] Textures;
+            internal double TotalWidth;
+            internal string Text;
+
+            
         }
     }
 }

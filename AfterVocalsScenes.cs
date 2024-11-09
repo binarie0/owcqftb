@@ -9,6 +9,7 @@ using StorybrewCommon.Subtitles;
 using StorybrewCommon.Util;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace StorybrewScripts
@@ -19,6 +20,8 @@ namespace StorybrewScripts
         public int StartTime = 0;
         [Configurable]
         public int EndTime = 0;
+        [Configurable]
+        public bool IncludeGirl = true;
 
         internal double BeatDuration;
 
@@ -110,16 +113,37 @@ namespace StorybrewScripts
             OsbAnimation grunge = Layer.CreateAnimation("sb/grain2/g.jpg", 6, BeatDuration*0.5, OsbLoopType.LoopForever);
             grunge.Fade(StartTime, 0.3);
             grunge.Fade(EndTime, 0);
-            OsbSprite girl = Layer.CreateSprite("sb/girl/character_full.png", OsbOrigin.Centre);
-            girl.Fade(StartTime, 1);
-            girl.Fade(EndTime, 0);
-            girl.Scale(StartTime, 0.5);
+
+            if (IncludeGirl)
+            {
+                for (int i = 120; i >= 0; i-= 60)
+                {
+                    OsbSprite girl = Layer.CreateSprite(i == 0 ? "sb/girl/character_full.png" : "sb/girl/character_mono.png", OsbOrigin.Centre);
+                    girl.Fade(StartTime, 1);
+                    girl.Fade(EndTime, 0);
+                    girl.Scale(StartTime, 0.5);
+                    girl.Move(StartTime, EndTime, i, 240, i * 1.25 + 20, 240);
+                    
+                    if (i != 0) girl.Color(StartTime, 0.2, 0.1, 0.2 + 0.4*(120/i));
+                }
+            }
+            else {
+                vignette = Layer.CreateSprite("sb/vignette.png", OsbOrigin.Centre);
+                vignette.Fade(StartTime, 0.8);
+                vignette.Fade(EndTime, 0);
+                vignette.Color(StartTime, Color4.Black);
+                vignette.Scale(StartTime, 0.45);
+            }
+
+            
             
             
 
             OsbSprite flash = Layer.CreateSprite("sb/1px.png", OsbOrigin.Centre);
             flash.ScaleVec(StartTime, 854, 480);
             flash.Fade(StartTime, StartTime + BeatDuration*4, 0.4, 0);
+            flash.Fade(EndTime - BeatDuration, EndTime, 0, 0.3);
+            flash.Fade(EndTime, EndTime + BeatDuration, 0.7, 0);
         }
     }
 }
