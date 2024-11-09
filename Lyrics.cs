@@ -103,22 +103,21 @@ namespace StorybrewScripts
             var font2 = LoadFont("sb/lyrics_outline", new FontDescription()
             {
                 FontPath = path,
-                FontSize = fontSize,
+                FontSize = fontSize*2,
                 Color = Color4.Black,
                 Padding = new Vector2(0,0),
                 FontStyle = FontStyle.Regular,
                 TrimTransparency = true,
                 
             },
-            new FontGlow()
+            new FontOutline()
             {
-                Power = 1,
-                Radius = 20,
-                Color = Color4.White 
+                Thickness = 2,
+                Color = Color4.White
             });
 
             fontGenerator2 = font2;
-
+            #region First Vocal Section
             generateBlackBackgroundLyrics("喉を締め付ける", 35763, 37610);
 
             generateFullColorLyrics("乾いた季節", 38648, 40090);
@@ -135,8 +134,9 @@ namespace StorybrewScripts
             generateFullColorLyrics("再会を予期してた", 47475, 52148);
             generateBlackBackgroundLyrics("再会を予期してた", 47475, 52148);
 
+            
             generateLyrics("Last sweet memory", 52148, 55379);
-
+            #endregion
             generateLyrics("待つことに", 64090, 65994);
             generateLyrics("慣れすぎて", 65994, 67840);
             generateLyrics("痛みさえ感じないの", 67840, 71533);
@@ -194,7 +194,7 @@ namespace StorybrewScripts
         internal void generateFullColorLyrics(string text, int startTime, int endTime)
         {
             
-            double scale = 0.9;
+            double scale = 0.75;
             
             double width = 0, height = 0;
             
@@ -202,9 +202,17 @@ namespace StorybrewScripts
             FontTexture[] textureArray = new FontTexture[text.Length];
             for (int i = 0 ; i < text.Length; i++)
             {
-                textureArray[i] = fontGenerator2.GetTexture(text.Substring(i, 1));
-                width += textureArray[i].Width;
-                height = textureArray[i].Height > height ? textureArray[i].Height : height;
+                if (text[i] == ' ')
+                {
+                    textureArray[i] = null;
+                    width += textureArray[i-1].Width * 1.5;
+                }
+                else
+                {
+                    textureArray[i] = fontGenerator2.GetTexture(text.Substring(i, 1));
+                    width += textureArray[i].Width;
+                    height = textureArray[i].Height > height ? textureArray[i].Height : height;
+                }
             }
 
             width *= scale;
@@ -212,10 +220,17 @@ namespace StorybrewScripts
             
             double startx = 320 - width*0.5;
             double currentX = startx;
+            int startDY = 4;
             for (int i = 0; i < text.Length; i++)
             {
+                if (textureArray[i] == null) continue;
+                startDY *= -1;
+                
                 OsbSprite p = Layer.CreateSprite(textureArray[i].Path, OsbOrigin.CentreLeft);
-                p.MoveX(startTime, endTime, currentX + 5, currentX - 5);
+                p.MoveX(startTime, currentX);
+                p.MoveY(OsbEasing.OutCirc, startTime, startTime + BeatDuration*2, 240 + startDY, 240);
+                
+                p.MoveY(OsbEasing.InCirc, endTime - BeatDuration*2, endTime, 240, 240 - startDY);
                 p.Fade(startTime, 1);
                 p.Fade(endTime, 0);
                 p.Scale(startTime, scale);
@@ -227,7 +242,7 @@ namespace StorybrewScripts
         internal void generateBlackBackgroundLyrics(string text, int startTime, int endTime)
         {
             double scale = 0.5;
-            
+            int startDY = -4;
             double width = 0, height = 0;
             OsbSprite backing = Layer.CreateSprite("sb/1px.png", OsbOrigin.Centre);
             backing.Fade(startTime, 1);
@@ -237,25 +252,36 @@ namespace StorybrewScripts
             FontTexture[] textureArray = new FontTexture[text.Length];
             for (int i = 0 ; i < text.Length; i++)
             {
-                textureArray[i] = fontGenerator.GetTexture(text.Substring(i, 1));
-                width += textureArray[i].Width;
-                height = textureArray[i].Height > height ? textureArray[i].Height : height;
+                if (text[i] == ' ')
+                {
+                    textureArray[i] = null;
+                    width += textureArray[i-1].Width * 1.5;
+                }
+                else {
+                    textureArray[i] = fontGenerator.GetTexture(text.Substring(i, 1));
+                    width += textureArray[i].Width * 1.5;
+                    height = textureArray[i].Height > height ? textureArray[i].Height : height;
+                }
             }
 
             width *= scale;
             height *= scale;
-            backing.ScaleVec(startTime, width*1.01, height);
-            double startx = 320 - width*0.5;
-            double currentX = startx;
+            backing.ScaleVec(startTime, width*1.25, height*1.25);
+            double startx = 320 - width*0.5 + textureArray[0].Width*scale*0.75;
+            
             for (int i = 0; i < text.Length; i++)
             {
-                OsbSprite p = Layer.CreateSprite(textureArray[i].Path, OsbOrigin.CentreLeft);
-                p.MoveX(startTime,currentX);
+                if (textureArray[i] == null) continue;
+                startDY *= -1;
+                OsbSprite p = Layer.CreateSprite(textureArray[i].Path, OsbOrigin.Centre);
+                p.MoveX(startTime, startx + (width / (text.Length))*i);
+                p.MoveY(OsbEasing.OutCirc, startTime, startTime + BeatDuration, 240 + startDY, 240);
+                p.MoveY(OsbEasing.InCirc, endTime - BeatDuration, endTime, 240, 240 - startDY);
                 p.Fade(startTime, 1);
                 p.Fade(endTime, 0);
                 p.Scale(startTime, scale);
 
-                currentX += textureArray[i].Width*scale;
+                
             }
         }
         void generateLyrics(string text, int startTime, int endTime){
