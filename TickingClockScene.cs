@@ -59,7 +59,7 @@ namespace StorybrewScripts
             //grad.Fade(EndTime, 0);
             grad.ScaleVec(EndTime, EndTime, 854, 2, 0, 0);
 
-            double minuterotation, hourrotation;
+            double minuterotation;
             //same time can be used for grad and minute hand
             for (double time = 169379; time < MidTime; time += BeatDuration*4)
             {

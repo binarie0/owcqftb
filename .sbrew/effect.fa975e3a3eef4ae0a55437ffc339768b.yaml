@@ -1,28 +1,28 @@
 ﻿FormatVersion: 7
-Name: "VocalsScenes 2"
-Script: "VocalsScenes"
+Name: "AfterVocalsScenes 2"
+Script: "AfterVocalsScenes"
 Multithreaded: No
 Config:
   StartTime:
     Type: "System.Int32"
-    Value: "131879"
+    Value: "213225"
     DisplayName: "Start Time"
   EndTime:
     Type: "System.Int32"
-    Value: "168917"
+    Value: "220610"
     DisplayName: "End Time"
-  IncludeEndScene:
+  IncludeGirl:
     Type: "System.Boolean"
     Value: "False"
-    DisplayName: "Include End Scene"
+    DisplayName: "Include Girl"
   RandomSeed:
     Type: "System.Int32"
-    Value: "0"
+    Value: "297"
     DisplayName: "Random Seed"
     BeginsGroup: "Common"
 Layers:
-  efa73dfe14de48c9a0f7f0191f2a7490:
-    Name: "Vocals Scenes (131879 - 168917)"
+  449da16c3dd44effaf129e2479717855:
+    Name: "After Vocals Scene (213225 - 220610)"
     OsbLayer: Background
     DiffSpecific: No
     Visible: Yes
