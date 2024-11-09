@@ -14,12 +14,28 @@ namespace StorybrewScripts
 {
     public class GuitarSolo : StoryboardObjectGenerator
     {
+        internal FontGenerator Generator;
         internal int StartTime = 183687, EndTime = 213225;
         List<OsuHitObject> CurrentObjects = new List<OsuHitObject>();
         internal double BeatDuration;
         internal StoryboardLayer Layer;
         public override void Generate()
         {
+            Generator = LoadFont("sb/text/guitarsolo", new FontDescription()
+            {
+                FontPath = "bigletterfont.ttf",
+                Color = Color4.Black,
+                Padding = new Vector2(0, 0),
+                FontSize = 100,
+                TrimTransparency = true
+            },
+            new FontGlow()
+            {
+                Power = 1.0,
+                Color = Color4.White,
+                
+
+            });
             Layer = GetLayer("Guitar Solo Scene");
             BeatDuration = Beatmap.GetTimingPointAt(StartTime).BeatDuration;
             //cache hitobjects
@@ -69,7 +85,11 @@ namespace StorybrewScripts
 
              HitLighting();
             //overlay
+            #region Text Overlays
+            CreateScrollingText("WHITEOUT", 40, OsbOrigin.TopLeft, true);
 
+            CreateScrollingText("GENKAKUARIA", 440, OsbOrigin.BottomRight, false);
+            #endregion
              #region Overlays
 
             OsbSprite flare1 = Layer.CreateSprite("sb/flares/1.png", OsbOrigin.Centre);
@@ -152,6 +172,29 @@ namespace StorybrewScripts
                 }
                 
             }
+        }
+        internal void CreateScrollingText(string word, int height, OsbOrigin origin, bool toLeft)
+        {
+            double scale = 0.6;
+            double x = toLeft ? 747 : -107;
+            double time = 1000*word.Length;
+            int loopct = (int)((EndTime - StartTime) / time + 1);
+            FontTexture texture = Generator.GetTexture(word);
+            double dx = texture.Width*scale;
+            while (toLeft ? (x > -107 - dx) : (x < 747 + dx))
+            {
+                OsbSprite p = Layer.CreateSprite(texture.Path, origin);
+                p.Fade(StartTime, 0.4);
+                p.Fade(EndTime, 0);
+                p.Additive(StartTime);
+                p.StartLoopGroup(StartTime, loopct);
+                    p.MoveX(0, time, x, toLeft ? x - dx : x + dx);
+                p.EndGroup();
+                p.Scale(StartTime, scale);
+                p.MoveY(StartTime, height);
+                x += toLeft ? -dx : dx;
+            }
+
         }
     }
 }
