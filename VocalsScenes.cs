@@ -27,11 +27,75 @@ namespace StorybrewScripts
             BeatDuration = Beatmap.GetTimingPointAt(StartTime).BeatDuration;
             Layer = GetLayer($"Vocals Scenes ({StartTime} - {EndTime})");
 
-
-            BlackAndWhiteScenes(StartTime, StartTime + BeatDuration*16, false);
-            BlackAndWhiteScenes(StartTime + BeatDuration*32, StartTime + BeatDuration*48, true);
+            double t1 = StartTime + BeatDuration*16,
+                    t2 = StartTime + BeatDuration*32,
+                    t3 = StartTime + BeatDuration*48,
+                    t4 = StartTime + BeatDuration*64;
+            BlackAndWhiteScenes(StartTime, t1, false);
+            ColorScenes(t1, t2);
+            BlackAndWhiteScenes(t2, t3, true);
+            ColorScenes(t3, t4, true);
 
             
+        }
+        internal void ColorScenes(double start, double end, bool noflashatend = false)
+        {
+            double swaptime = start + BeatDuration*8;
+            double dscale = 0.1, scale = 0.45;
+
+            //p1
+            OsbSprite bg = Layer.CreateSprite("sb/bg/bg1sky.jpg", OsbOrigin.Centre);
+            bg.Fade(start, 1);
+            bg.Fade(swaptime, 0);
+            bg.Scale(OsbEasing.OutSine, start, swaptime, scale, scale + dscale*0.25);
+
+            OsbSprite mtn = Layer.CreateSprite("sb/bg/bg1mountains.png", OsbOrigin.Centre);
+            mtn.Fade(start, 1);
+            mtn.Fade(swaptime, 0);
+            mtn.Scale(OsbEasing.OutSine, start, swaptime, scale, scale + dscale*0.6);
+
+            OsbSprite foreground = Layer.CreateSprite("sb/bg/bg1foreground.png", OsbOrigin.Centre);
+            foreground.Fade(start, 1);
+            foreground.Fade(swaptime, 0);
+            foreground.Scale(OsbEasing.OutSine, start, swaptime, scale, scale + dscale);
+
+            OsbSprite cover = Layer.CreateSprite("sb/1px.png", OsbOrigin.Centre);
+            cover.Fade(start, 0.2);
+            cover.Fade(end, 0);
+            cover.ScaleVec(start, 854, 480);
+            cover.Color(start, Color4.Black);
+            //p2
+
+            OsbSprite back = Layer.CreateSprite("sb/bg/blur/bg1background.jpg", OsbOrigin.Centre);
+            back.Fade(swaptime, 1);
+            back.Fade(end, 0);
+            back.Scale(swaptime, scale + dscale);
+            back.Rotate(swaptime, -0.1);
+            back.MoveX(OsbEasing.OutSine, swaptime, end, 380, 300);
+
+            OsbSprite vignette = Layer.CreateSprite("sb/vignette.png", OsbOrigin.Centre);
+            vignette.Fade(swaptime, 0.4);
+            vignette.Fade(end, 0);
+            vignette.Scale(swaptime, 0.5);
+            vignette.Color(swaptime, Color4.Black);
+
+            OsbAnimation anim = Layer.CreateAnimation("sb/grain/g.jpg", 10, BeatDuration*0.5, OsbLoopType.LoopForever);
+            anim.Fade(swaptime, 0.1);
+            anim.Fade(end, 0);
+
+            OsbSprite girl = Layer.CreateSprite("sb/girl/character_full.png", OsbOrigin.Centre);
+            girl.Fade(swaptime, 0.8);
+            girl.Fade(end, 0);
+            girl.Scale(swaptime, 0.5);
+            girl.MoveX(OsbEasing.OutSine, swaptime, end, 340, 300);
+
+
+
+            OsbSprite overlay = Layer.CreateSprite("sb/1px.png", OsbOrigin.Centre);
+            overlay.Fade(start, start + BeatDuration*4, 0.7, 0);
+            overlay.Fade(swaptime, swaptime + BeatDuration*2, 0.3, 0);
+            overlay.ScaleVec(start, 854, 480);
+            if (!noflashatend) overlay.Fade(end - BeatDuration*1.5, end, 0, 0.4);
         }
         internal void BlackAndWhiteScenes(double start, double end, bool flip)
         {
@@ -60,7 +124,7 @@ namespace StorybrewScripts
             girl.Fade(start, 1);
             girl.Fade(end, 0);
             girl.Scale(start, 0.2);
-            girl.MoveX(OsbEasing.OutSine, start, end, flip ? 320 : 320 + dx*4.5, flip ? 320 + dx*4.5 : 320);
+            girl.MoveX(OsbEasing.OutSine, start, end, flip ? 220 : 320 + dx*4.5, flip ? 220 + dx*4.5 : 320);
             if (flip) girl.FlipH(start);
             
             OsbSprite tree = Layer.CreateSprite("sb/bg/bw/bg1fronttree.png", OsbOrigin.Centre);
