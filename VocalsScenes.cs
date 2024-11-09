@@ -18,10 +18,62 @@ namespace StorybrewScripts
         public int StartTime = 0;
         [Configurable]
         public int EndTime = 0;
+
+        internal StoryboardLayer Layer;
+        internal double BeatDuration;
         public override void Generate()
         {
-		    
+		    if (StartTime == 0 || EndTime == 0 || StartTime == EndTime) throw new Exception();
+            BeatDuration = Beatmap.GetTimingPointAt(StartTime).BeatDuration;
+            Layer = GetLayer($"Vocals Scenes ({StartTime} - {EndTime})");
+
+
+            BlackAndWhiteScenes(StartTime, StartTime + BeatDuration*16);
+
             
+        }
+        internal void BlackAndWhiteScenes(double start, double end)
+        {
+            OsbSprite sky = Layer.CreateSprite("sb/bg/bw/bg1sky.png", OsbOrigin.Centre);
+            sky.Fade(start, 1);
+            sky.Fade(end, 0);
+            sky.Scale(start, 0.5);
+            sky.MoveX(OsbEasing.OutSine, start, end, 340, 320);
+            OsbSprite bg = Layer.CreateSprite("sb/bg/bw/bg1background.png", OsbOrigin.Centre);
+            bg.Fade(start, 1);
+            bg.Fade(end, 0);
+            bg.Scale(start, 0.55);
+            bg.MoveX(OsbEasing.OutSine, start, end, 380, 320);
+
+            OsbSprite haze = Layer.CreateSprite("sb/bg/haze.png", OsbOrigin.Centre);
+            haze.Fade(start, 1);
+            haze.Fade(end, 0);
+            haze.Scale(start, 0.55);
+            haze.MoveX(OsbEasing.OutSine, start, end, 400, 320);
+
+            OsbSprite girl = Layer.CreateSprite("sb/girl/character_bw.png", OsbOrigin.Centre);
+            girl.Fade(start, 1);
+            girl.Fade(end, 0);
+            girl.Scale(start, 0.2);
+            girl.MoveX(OsbEasing.OutSine, start, end, 400, 320);
+            OsbSprite tree = Layer.CreateSprite("sb/bg/bw/bg1fronttree.png", OsbOrigin.Centre);
+            tree.Fade(start, 1);
+            tree.Fade(end, 0);
+            tree.Scale(start, 0.59);
+            tree.MoveX(OsbEasing.OutSine, start, end, 580, 480);
+
+            
+
+            OsbSprite vignette = Layer.CreateSprite("sb/vignette.png", OsbOrigin.Centre);
+            vignette.Fade(start, 0.8);
+            vignette.Fade(end, 0);
+            vignette.Color(start, Color4.Black);
+
+            OsbAnimation noise = Layer.CreateAnimation("sb/noise/mono/n.jpg", 8, BeatDuration*0.5, OsbLoopType.LoopForever);
+            noise.Fade(start, 0.05);
+            noise.Fade(end, 0);
+
+
         }
     }
 }

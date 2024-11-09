@@ -5,11 +5,11 @@ Multithreaded: No
 Config:
   StartTime:
     Type: "System.Int32"
-    Value: "0"
+    Value: "34956"
     DisplayName: "Start Time"
   EndTime:
     Type: "System.Int32"
-    Value: "0"
+    Value: "64610"
     DisplayName: "End Time"
   RandomSeed:
     Type: "System.Int32"
@@ -17,3 +17,8 @@ Config:
     DisplayName: "Random Seed"
     BeginsGroup: "Common"
 Layers:
+  fdf1fbfed9fe450897e0b304c98613ec:
+    Name: "Vocals Scenes (34956 - 64610)"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
