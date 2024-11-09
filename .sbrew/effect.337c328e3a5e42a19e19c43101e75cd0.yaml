@@ -17,3 +17,8 @@ Config:
     DisplayName: "Random Seed"
     BeginsGroup: "Common"
 Layers:
+  5f6186b3378e4014a0030f63ec2e38d5:
+    Name: "Bridge (64494 - 82956)"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
