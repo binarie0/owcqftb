@@ -9,6 +9,7 @@ using StorybrewCommon.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 
 namespace StorybrewScripts
 {
@@ -36,7 +37,70 @@ namespace StorybrewScripts
             
             RainbowParticle(82956, 90456);
             RainbowParticle(97725, 108917);
+
+            fill1(95763);
             
+        }
+
+        void fill1(int startTime){
+            
+            //Black screen sliding in 
+            var checkpoint1 = startTime + 95994 - 95763;
+            var checkpoint1point5 = startTime + 96456 - 95763;
+            //1st crash
+            var checkpoint2 = startTime + 96110 - 95763;
+            //2nd crash
+            var checkpoint3 = startTime + 96802 - 95763;
+            //3rd crash
+            var checkpoint4 = startTime + 97148 - 95763;
+            var endpoint = startTime + 97725 - 95763;
+
+            var layer = GetLayer("Chorus FRONT");
+            var blackSlide = layer.CreateSprite("sb/1px.png", OsbOrigin.CentreLeft);
+            blackSlide.MoveX(OsbEasing.OutCirc, startTime, checkpoint1, ScreenBoundsRight, ScreenBoundsLeft);
+            blackSlide.ScaleVec(startTime, ScreenWidth, ScreenHeight);
+            blackSlide.Color(startTime, Color4.Black);
+            blackSlide.Fade(endpoint, endpoint + 500, 1, 0);
+            blackSlide.Color(endpoint, Color4.White);
+        
+
+            var snow = layer.CreateAnimation("sb/snowflakes/snowflake.png", 25, 96225 - 96110, OsbLoopType.LoopForever, OsbOrigin.Centre);
+            snow.Fade(checkpoint2, 1);
+            snow.Fade(endpoint, 0);
+            snow.Rotate(OsbEasing.OutCirc, checkpoint2, endpoint, Math.PI * 2, 0);
+            snow.Scale(OsbEasing.OutBack,checkpoint2, checkpoint2 + 500, 0.4, 1);
+            
+
+            var puddle15 = layer.CreateSprite("sb/circ.png", OsbOrigin.Centre, new Vector2(Random(ScreenBoundsLeft, ScreenBoundsRight), Random(ScreenBoundsTop, ScreenBoundsBottom)));
+            puddle15.Scale(OsbEasing.OutExpo, checkpoint1point5, checkpoint1point5 + 1000, 0, 0.4);
+            puddle15.Fade(checkpoint1point5, 0.6);
+            puddle15.Additive(checkpoint1point5, endpoint);
+            puddle15.Color(checkpoint1point5, Color4.SkyBlue);
+
+
+            var puddle1 = layer.CreateSprite("sb/circ.png", OsbOrigin.Centre, new Vector2(Random(ScreenBoundsLeft, ScreenBoundsRight), Random(ScreenBoundsTop, ScreenBoundsBottom)));
+            puddle1.Scale(OsbEasing.OutExpo, checkpoint2, checkpoint2 + 1000, 0, 0.4);
+            puddle1.Fade(checkpoint2, 0.6);
+            puddle1.Additive(checkpoint1, endpoint);
+            puddle1.Color(checkpoint1, Color4.SkyBlue);
+
+            var puddle2 = layer.CreateSprite("sb/circ.png", OsbOrigin.Centre, new Vector2(Random(ScreenBoundsLeft, ScreenBoundsRight), Random(ScreenBoundsTop, ScreenBoundsBottom)));
+            puddle2.Scale(OsbEasing.OutExpo, checkpoint3, checkpoint3 + 1000, 0, 0.4);
+            puddle2.Fade(checkpoint2, 0.6);
+            puddle2.Additive(checkpoint2, endpoint);
+            puddle2.Color(checkpoint2, Color4.SkyBlue);
+
+            var puddle3 = layer.CreateSprite("sb/circ.png", OsbOrigin.Centre, new Vector2(Random(ScreenBoundsLeft, ScreenBoundsRight), Random(ScreenBoundsTop, ScreenBoundsBottom)));
+            puddle3.Scale(OsbEasing.OutExpo, checkpoint4, endpoint, 0, 0.4);
+            puddle3.Fade(checkpoint3, 0.6);
+            puddle3.Additive(checkpoint3, endpoint);
+            puddle3.Color(checkpoint3, Color4.SkyBlue);
+
+
+            
+            
+
+
         }
         void RainbowParticle(int startTime, int endTime){
             var layer = GetLayer("Chorus Particle");
