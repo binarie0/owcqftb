@@ -126,6 +126,13 @@ namespace StorybrewScripts
                     
                     if (i != 0) girl.Color(StartTime, 0.2, 0.1, 0.2 + 0.4*(120/i));
                 }
+
+                OsbAnimation snowflake = Layer.CreateAnimation("sb/snowflakes/snowflake.png", 25, BeatDuration*0.5, OsbLoopType.LoopForever);
+                snowflake.Fade(StartTime, 0.2);
+                snowflake.Fade(EndTime, 0);
+                snowflake.Scale(StartTime, 0.75);
+                snowflake.MoveX(StartTime, 550);
+                snowflake.Rotate(StartTime, 0.1);
             }
             else {
                 vignette = Layer.CreateSprite("sb/vignette.png", OsbOrigin.Centre);
@@ -133,7 +140,15 @@ namespace StorybrewScripts
                 vignette.Fade(EndTime, 0);
                 vignette.Color(StartTime, Color4.Black);
                 vignette.Scale(StartTime, 0.45);
+
+                OsbAnimation snowflake = Layer.CreateAnimation("sb/snowflakes/snowflake.png", 25, BeatDuration*0.5, OsbLoopType.LoopForever);
+                snowflake.Fade(StartTime, 0.2);
+                snowflake.Fade(EndTime, 0);
+                snowflake.Scale(StartTime, 0.75);
+                
+               
             }
+
 
             
             

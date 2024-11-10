@@ -4,6 +4,7 @@ BeatmapName: "not hitsound diff"
 Assemblies:
   - "D:\\storybrew\\projects\\owcqftb\\SBImageLib.dll"
 Layers:
+  - "d62e80d9e84546878527bce2eff8614a"
   - "bca78c9318a6455fa5e9b8c29441f1bf"
   - "2dbd982611f147ba9093424cfe74988e"
   - "64478e7e3d974cb0a8debfad0d2b71d8"
@@ -14,5 +15,6 @@ Layers:
   - "449da16c3dd44effaf129e2479717855"
   - "e997edabb1a349d680ad851bd34f6ac4"
   - "5f6186b3378e4014a0030f63ec2e38d5"
+  - "1c90fb4356f84ec48e4e23e72082cb8c"
   - "0e4dc04996674272973815071cb894e2"
   - "78d43df8af2e42daa19b11350d2e2c38"
