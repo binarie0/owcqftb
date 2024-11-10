@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("storyboard")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+66f9e7c955471fd0c5e6420c2753d7c064c94409")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bdd06439184efa007c15f00fd8aa4584517f4fc5")]
 [assembly: System.Reflection.AssemblyProductAttribute("storyboard")]
 [assembly: System.Reflection.AssemblyTitleAttribute("storyboard")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -198,12 +198,12 @@ namespace StorybrewScripts
             generateLyrics("さよなら", 164533, 165917);
             generateLyrics("言わないで", 165917, 168917);
 
-            generateLyrics("足跡も消えて", 230994, 234629);
-            generateLyrics("無に返すのなら", 234629, 236764);
-            generateLyrics("いっそ記憶も消し去って", 236764, 241379);
-            generateLyrics("今も", 241379, 243225);
-            generateLyrics("冷え切った体温が", 243225, 246225);
-            generateLyrics("まだ覚えてる", 246225, 250148);
+            generateBlackBackgroundLyrics("足跡も消えて", 230994, 234629);
+            generateBlackBackgroundLyrics("無に返すのなら", 234629, 236764);
+            generateBlackBackgroundLyrics("いっそ記憶も消し去って", 236764, 241379);
+            generateBlackBackgroundLyrics("今も", 241379, 243225);
+            generateBlackBackgroundLyrics("冷え切った体温が", 243225, 246225);
+            generateBlackBackgroundLyrics("まだ覚えてる", 246225, 250148);
 
             generateLyrics("視界ゼロの中あなたと", 255225, 258917);
             generateLyrics("繋いだ手の温もりが恋しくて", 258917, 262667);

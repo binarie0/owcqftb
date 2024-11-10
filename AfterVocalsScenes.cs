@@ -26,12 +26,23 @@ namespace StorybrewScripts
         internal double BeatDuration;
 
         internal StoryboardLayer Layer;
+        internal List<OsuHitObject> CurrentObjects = new List<OsuHitObject>();
         public override void Generate()
         {
             
 		    if (StartTime == 0 || EndTime == 0 || StartTime == EndTime) throw new Exception();
 
+            
+
             BeatDuration = Beatmap.GetTimingPointAt(StartTime).BeatDuration;
+
+            foreach (var HO in Beatmap.HitObjects)
+            {
+                if (HO.StartTime >= StartTime + BeatDuration*32 - 5 && HO.EndTime <= EndTime)
+                {
+                    CurrentObjects.Add(HO);
+                }
+            }
 
             Layer = GetLayer($"After Vocals Scene ({StartTime} - {EndTime})");
             OsbSprite bg = Layer.CreateSprite("sb/bg/blur/bg1background.jpg");
@@ -145,6 +156,25 @@ namespace StorybrewScripts
                 snowflake.Fade(StartTime, 0.2);
                 snowflake.Fade(EndTime, 0);
                 snowflake.Scale(StartTime, 0.75);
+                snowflake.Scale(OsbEasing.OutSine, StartTime + BeatDuration*32, StartTime + BeatDuration*33, 0.75, 0.8);
+                vignette.Fade(OsbEasing.OutSine, StartTime + BeatDuration*32, StartTime + BeatDuration*33, 0.8, 0.6);
+                
+                foreach (OsuHitObject obj in CurrentObjects)
+                {
+                    OsbSprite top = Layer.CreateSprite("sb/grad.png", OsbOrigin.BottomCentre);
+                    top.Fade(obj.StartTime, obj.StartTime + BeatDuration*4, 0.2, 0);
+                    top.ScaleVec(obj.StartTime, 150, 2.4);
+                    top.Move(obj.StartTime, obj.PositionAtTime(obj.StartTime).X, 40);
+                    top.Rotate(obj.StartTime, Math.PI);
+
+                    top = Layer.CreateSprite("sb/grad.png", OsbOrigin.BottomCentre);
+                    top.Fade(obj.StartTime, obj.StartTime + BeatDuration*4, 0.2, 0);
+                    top.ScaleVec(obj.StartTime, 150, 2.4);
+                    top.Move(obj.StartTime, obj.PositionAtTime(obj.StartTime).X, 440);
+                    
+
+
+                }
                 
                
             }
