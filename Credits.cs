@@ -149,8 +149,8 @@ namespace StorybrewScripts
         void generateCredit(string title, string name, int start, int end){
             var layer = GetLayer("credits");
 
-            var additiveRADIUS = 30 * 1.5f;
-            var additiveBarLength = 85 * 1.5f;
+            var additiveRADIUS = 30 * 1.59f;
+            var additiveBarLength = 85 * 1.59f;
             var fontScale = 1.5;
             var mainSqareScale = 1.5;
         
