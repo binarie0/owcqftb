@@ -9,7 +9,7 @@ Config:
     DisplayName: "Start Time"
   EndTime:
     Type: "System.Int32"
-    Value: "220610"
+    Value: "228917"
     DisplayName: "End Time"
   IncludeGirl:
     Type: "System.Boolean"
@@ -21,8 +21,8 @@ Config:
     DisplayName: "Random Seed"
     BeginsGroup: "Common"
 Layers:
-  449da16c3dd44effaf129e2479717855:
-    Name: "After Vocals Scene (213225 - 220610)"
+  91ce8c87fb8e4076a630cfee42bc92e9:
+    Name: "After Vocals Scene (213225 - 228917)"
     OsbLayer: Background
     DiffSpecific: No
     Visible: Yes

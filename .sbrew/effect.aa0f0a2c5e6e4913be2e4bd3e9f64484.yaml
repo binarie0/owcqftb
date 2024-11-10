@@ -1,0 +1,26 @@
+﻿FormatVersion: 7
+Name: "Chorus 1"
+Script: "Chorus"
+Multithreaded: No
+Config:
+  RandomSeed:
+    Type: "System.Int32"
+    Value: "0"
+    DisplayName: "Random Seed"
+    BeginsGroup: "Common"
+Layers:
+  0631d4ad9bb941778385293c98037eef:
+    Name: "Chorus BACK"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
+  4f8ab4c1cfc04a5297e2101b46d84b1d:
+    Name: "Chorus Particle"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
+  061a3a855b1148628cab9ee37cdf43fe:
+    Name: "Chorus FRONT"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
