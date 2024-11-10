@@ -148,8 +148,10 @@ namespace StorybrewScripts
             generateBuildupLyrics("慣れすぎて", 66340, 67379);
             generateBlackBackgroundLyrics("慣れすぎて", 65994, 67840);
 
-            generateFullColorLyrics("痛みさえ感じないの", 68187, 71533);
-            generateBlackBackgroundLyrics("痛みさえ感じないの", 67840, 71533);
+            generateFullColorLyrics("痛みさえ", 68187, 69917);
+            generateFullColorLyrics("感じないの", 69917, 71533);
+            generateBlackBackgroundLyrics("痛みさえ", 67840, 69917);
+            generateBlackBackgroundLyrics("感じないの", 69917, 71533);
 
             generateBuildupLyrics("麻痺してる", 71879, 72917);
             generateBlackBackgroundLyrics("麻痺してる", 71533, 73379);
@@ -173,8 +175,10 @@ namespace StorybrewScripts
             generateLyrics("悪魔の手招き", 110302, 111687);
             generateLyrics("Whiteout", 111687, 113533);
 
-            generateFullColorLyrics("お揃いだったコロンの香り", 135571, 137071);
-            generateBlackBackgroundLyrics("お揃いだったコロンの香り", 132687, 137071);
+            generateFullColorLyrics("お揃いだった", 132687, 134533);
+            generateFullColorLyrics("コロンの香り", 134533, 137071);
+            generateBlackBackgroundLyrics("お揃いだった", 132687, 134533);
+            generateBlackBackgroundLyrics("コロンの香り", 134533, 137071);
 
             generateFullColorLyrics("捨てられずにいる", 137071, 139264);
             generateBlackBackgroundLyrics("捨てられずにいる", 137071, 140071);
