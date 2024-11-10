@@ -40,16 +40,16 @@ namespace StorybrewScripts
             RainbowParticle(97725, 108917);
 
             fill1(95763);
-
+            fill2(108917, 113417);
             ChorusPart1(255687, 1);
 
             fill1(268378);
-            fill2();
+            fill2(281532, 290648, true);
         }
-
-        void fill2()
+        
+        void fill2(int startTime, int endTime, bool includeNoise = false)
         {
-            int startTime = 281532, endTime = 290648;
+            
             double BeatDuration = Beatmap.GetTimingPointAt(startTime).BeatDuration;
             StoryboardLayer layer = GetLayer("Chorus BACK");
 
@@ -67,6 +67,7 @@ namespace StorybrewScripts
             vignette.Scale(startTime, 0.5);
             vignette.Color(startTime, Color4.Black);
 
+            if (!includeNoise) return;
             OsbAnimation noise = layer.CreateAnimation("sb/noise/fc/n.jpg", 8, BeatDuration*0.25, OsbLoopType.LoopForever);
             noise.Fade(284301, 284417, 0.1, 0);
             noise.Fade(284417, 284417 + BeatDuration, 0.1, 0);
