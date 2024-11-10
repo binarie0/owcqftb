@@ -165,15 +165,22 @@ namespace StorybrewScripts
             generateFullColorLyrics("また求めてる", 78225, 82148);
             generateBlackBackgroundLyrics("また求めてる", 78225, 82148);
 
-            generateLyrics("視界ゼロの中あなたと", 82610, 86302);
-            generateLyrics("繋いだ手の温もりが恋しくて", 86302, 89994);
-            generateLyrics("滔々と降り積もる雪に", 89994, 94379);
-            generateLyrics("そっと手を伸ばした", 94379, 97379);
-            generateLyrics("白い闇を愛せるように", 97379, 101071);
-            generateLyrics("マイナスの世界で踊り続ける", 101071, 108917);
-            generateLyrics("遠退く意識に", 108917, 110302);
-            generateLyrics("悪魔の手招き", 110302, 111687);
-            generateLyrics("Whiteout", 111687, 113533);
+
+            //CHORUS
+            generateLyricsChorus("視界ゼロの中あなたと", 83071, 86302);
+            generateLyricsChorus("繋いだ手の温もりが恋しくて", 86302, 89994);
+            generateLyricsChorus("滔々と降り積もる雪に", 89994, 94379);
+            generateLyricsChorus("そっと手を伸ばした", 94379, 97379);
+            generateLyricsChorus("白い闇を愛せるように", 97379, 101071);
+            generateLyricsChorus("マイナスの世界で踊り続ける", 101071, 108917);
+            
+            
+            
+            fillLyrics("遠退く", 108917, 109148 - 108917, 109610);
+            fillLyrics("意識に", 109610, 109148 - 108917, 110302);
+            fillLyrics("悪魔の", 110302, 109148 - 108917, 110994);
+            fillLyrics("手招き", 110994, 109148 - 108917, 111687);
+            fillLyrics("Whiteout", 111687, 113533, 113417);
 
             generateFullColorLyrics("お揃いだった", 132687, 134533);
             generateFullColorLyrics("コロンの香り", 134533, 137071);
@@ -219,6 +226,155 @@ namespace StorybrewScripts
             generateLyrics("Whiteout", 287994, 289840);
 
             
+        }
+
+        void generateLyricsChorus(string text, int startTime, int endTime){
+
+            
+
+            
+            GenerateBackgroundLyrics(text, startTime, endTime);
+            GenerateFrontLyrics(text, startTime, endTime);
+            
+
+        }
+
+        void GenerateFrontLyrics(string text, int StartTime, int EndTime){
+
+            var layer = GetLayer("Chorus Lyrics FRONT");
+            var blackBar = true;
+            
+            
+                var letterX = 320;
+                var delay = 0; 
+                var i = 0;
+                var verticalShift = 0;
+                var FontScale = 0.2f;
+                var dir = 1;
+                foreach (var line in text.Split('\n'))
+                {
+                    var lineWidth = 0f;
+                    var lineHeight = 0f;
+                    foreach (var letter in line)
+                    {
+                        var texture = fontGenerator.GetTexture(letter.ToString());
+                        lineWidth = Math.Max(lineWidth, texture.BaseWidth * FontScale);
+                        lineHeight += texture.BaseHeight * FontScale;
+                    }
+
+                    
+                    var letterY = 240 - lineHeight * 0.5f;
+
+                    if(blackBar){
+                        var p = layer.CreateSprite("sb/1px.png", OsbOrigin.TopCentre, new Vector2(letterX, letterY));
+                        p.ScaleVec(OsbEasing.OutExpo, StartTime + delay, EndTime, lineWidth, 0, lineWidth, lineHeight);
+                        p.Color(StartTime + delay, Color4.Black);
+                        p.Fade(EndTime - 200, EndTime, 1, 0);
+                    }
+                    
+                    
+                    foreach (var letter in line)
+                    {
+                        var texture = fontGenerator.GetTexture(letter.ToString());
+                        if (!texture.IsEmpty)
+                        {
+                            var position = new Vector2(letterX, letterY)
+                                + texture.OffsetFor(OsbOrigin.Centre) * FontScale;
+
+                            var sprite = layer.CreateSprite(texture.Path, OsbOrigin.Centre, position);
+                            sprite.Scale(StartTime + delay, FontScale);
+                            sprite.Fade(StartTime - 200 + delay, StartTime + delay, 0, 1);
+                            sprite.MoveX(OsbEasing.OutExpo, StartTime - 200 + delay, EndTime, letterX, letterX + 1 * dir);
+                            sprite.Rotate(OsbEasing.OutExpo, StartTime - 200 + delay, EndTime, 0, Math.PI/60 * dir);
+                            sprite.Fade(EndTime - 200, EndTime, 1, 0);
+                            sprite.Additive(StartTime - 200 + delay, EndTime);
+                        }
+                        letterY += (int)(texture.BaseHeight * FontScale);
+                        delay += 20;
+                        dir *= -1;
+                    }
+                    letterX -= (int)(lineWidth + 1f);
+                    i++;
+                }
+            
+        }
+
+        void GenerateBackgroundLyrics(string text, int startTime, int endTime){
+
+            var layer = GetLayer("Chorus Lyrics BACK");
+            
+            var FontScale = 0.5f;
+
+            
+                var letterY = 100f;
+                foreach (var line in text.Split('\n'))
+                {
+                    var lineWidth = 0f;
+                    var lineHeight = 0f;
+                    foreach (var letter in line)
+                    {
+                        var texture = fontGenerator2.GetTexture(letter.ToString());
+                        lineWidth += texture.BaseWidth * FontScale;
+                        lineHeight = Math.Max(lineHeight, texture.BaseHeight * FontScale);
+                    }
+
+                    var letterX = 320 - lineWidth * 0.5f;
+                    var dir = 1;
+                    foreach (var letter in line)
+                    {
+                        var texture = fontGenerator2.GetTexture(letter.ToString());
+                        if (!texture.IsEmpty)
+                        {
+                            var position = new Vector2(letterX, letterY)
+                                + texture.OffsetFor(OsbOrigin.Centre) * FontScale;
+
+                            var sprite = layer.CreateSprite(texture.Path, OsbOrigin.Centre, position);
+                            sprite.Scale(startTime, FontScale);
+                            sprite.Fade(startTime, startTime + 200, 0, 1);
+                            sprite.Fade(endTime - 200, endTime, 1, 0);
+                            sprite.MoveY(OsbEasing.OutCirc, startTime, startTime + 200, position.Y + 10 * dir, position.Y);
+                            sprite.MoveY(OsbEasing.InCirc, endTime - 200, endTime, position.Y, position.Y + 10 * dir);
+                            sprite.Additive(startTime, endTime + 200);
+                        }
+                        letterX += texture.BaseWidth * FontScale;
+                        dir *= -1;
+                    }
+                    letterY += lineHeight;
+                }
+
+        }
+
+        void fillLyrics(string text, int startTime, int perBeat, int endTime){
+
+            var delay = 0;
+            var addedY = 0;
+            var addedX = 1;
+            if(text == "Whiteout"){
+                var texture = fontGenerator2.GetTexture(text);
+                var line = Layer.CreateSprite(texture.Path, OsbOrigin.Centre);
+                
+                line.Fade(startTime, 1);
+                line.ScaleVec(startTime, 0.3, 0.3);
+                line.Fade(endTime, 0);
+                
+            }else{
+                foreach(var letter in text){
+                    var texture = fontGenerator2.GetTexture(letter.ToString());
+                    var line = Layer.CreateSprite(texture.Path, OsbOrigin.Centre, new Vector2(320 + 50 * addedX, 100 + addedY));
+                    
+                    line.Fade(startTime + delay, 1);
+                    line.ScaleVec(startTime  + delay, 0.5, 0.5);
+                    line.Fade(endTime, 0);
+                    line.Rotate(startTime + delay, Random(-Math.PI / 10, Math.PI / 10));
+
+                    delay += perBeat;
+                    addedY += 130;
+                    addedX *= -1;
+                }
+            }
+            
+            
+
         }
         internal void generateBuildupLyrics(string text, int startTime, int endTime)
         {
