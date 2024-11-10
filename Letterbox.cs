@@ -64,9 +64,9 @@ namespace StorybrewScripts
             
 
             //changes in height
-            letterbox.ScaleVec(OsbEasing.OutSine, 9225, 12917, width, LetterboxHeight, width, LetterboxHeight*2);
+            //letterbox.ScaleVec(OsbEasing.OutSine, 9225, 12917, width, LetterboxHeight, width, LetterboxHeight*2);
 
-            letterbox.ScaleVec(OsbEasing.OutCirc, 14763, 15687, width, LetterboxHeight*2, width, LetterboxHeight);
+            //letterbox.ScaleVec(OsbEasing.OutCirc, 14763, 15687, width, LetterboxHeight*2, width, LetterboxHeight);
 
             //after guitar solo
             letterbox.ScaleVec(OsbEasing.OutSine, 213225, 215071, width, LetterboxHeight, width, LetterboxHeight*2);

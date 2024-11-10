@@ -9,6 +9,21 @@ Config:
     DisplayName: "Random Seed"
     BeginsGroup: "Common"
 Layers:
+  c9d9c22d09f743f08690d0c565b88be9:
+    Name: "Mid Song Underlay"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
+  c74c8e320b224d15825fd5df4870b75f:
+    Name: "Chorus Lyrics BACK"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
+  6e40aa0fad164a4c8190a13e12db8440:
+    Name: "Chorus Lyrics FRONT"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
   0e4dc04996674272973815071cb894e2:
     Name: "Lyrics"
     OsbLayer: Foreground

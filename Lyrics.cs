@@ -182,8 +182,8 @@ namespace StorybrewScripts
             fillLyrics("手招き", 110994, 109148 - 108917, 111687);
             fillLyrics("Whiteout", 111687, 113533, 113417);
 
-            generateFullColorLyrics("お揃いだった", 132687, 134533);
-            generateFullColorLyrics("コロンの香り", 134533, 137071);
+            //generateFullColorLyrics("お揃いだった", 132687, 134533);
+            generateFullColorLyrics("コロンの香り", 135571, 137071);
             generateBlackBackgroundLyrics("お揃いだった", 132687, 134533);
             generateBlackBackgroundLyrics("コロンの香り", 134533, 137071);
 
@@ -193,37 +193,49 @@ namespace StorybrewScripts
             generateFullColorLyrics("黒のコートも頭の中も", 142956, 144398);
             generateBlackBackgroundLyrics("黒のコートも頭の中も", 140071, 144398);
 
-            generateFullColorLyrics("黒のコートも頭の中も", 144398, 144802);
+            generateFullColorLyrics("もう真っ白で…", 144398, 144802);
             generateBlackBackgroundLyrics("もう真っ白で…", 144398, 146764); //changed from 146994 for better transition
 
-            generateLyrics("I wish もう一度", 146994, 150687);
-            generateLyrics("I wish 伝えたい", 150687, 154148);
-            generateLyrics("あなた好みの服を着て", 154148, 155994);
-            generateLyrics("あなた好みの趣味始めて", 155994, 157840);
-            generateLyrics("あなた好みの日常で", 157840, 159456);
-            generateLyrics("溢れているから", 159456, 164533);
-            generateLyrics("さよなら", 164533, 165917);
-            generateLyrics("言わないで", 165917, 168917);
+            generateUnderlayLyrics("I wish", 146994, 154148);
+            generateBlackBackgroundLyrics("もう一度", 146994, 150687);
+            generateBlackBackgroundLyrics("伝えたい", 150687, 154148);
 
+            generateBlackBackgroundLyrics("あなた好みの服を着て", 154148, 155994);
+            generateBlackBackgroundLyrics("あなた好みの趣味始めて", 155994, 157840);
+            generateBlackBackgroundLyrics("あなた好みの日常で", 157840, 159456);
+            generateBlackBackgroundLyrics("溢れているから", 159456, 164533);
+            generateBlackBackgroundLyrics("さよなら", 164533, 165917);
+            generateBlackBackgroundLyrics("言わないで", 165917, 168917);
+
+            generateFullColorLyrics("足跡も消えて", 230994, 234629);
             generateBlackBackgroundLyrics("足跡も消えて", 230994, 234629);
+            generateFullColorLyrics("無に返すのなら", 234629, 236764);
             generateBlackBackgroundLyrics("無に返すのなら", 234629, 236764);
+            generateFullColorLyrics("いっそ記憶も消し去って", 236764, 241379);
             generateBlackBackgroundLyrics("いっそ記憶も消し去って", 236764, 241379);
+
+            generateFullColorLyrics("今も", 241379, 243225);
+            generateFullColorLyrics("冷え切った体温が", 243225, 246225);
+            generateFullColorLyrics("まだ覚えてる", 246225, 250148);
+
             generateBlackBackgroundLyrics("今も", 241379, 243225);
             generateBlackBackgroundLyrics("冷え切った体温が", 243225, 246225);
             generateBlackBackgroundLyrics("まだ覚えてる", 246225, 250148);
 
-            generateLyrics("視界ゼロの中あなたと", 255225, 258917);
-            generateLyrics("繋いだ手の温もりが恋しくて", 258917, 262667);
-            generateLyrics("滔々と降り積もる雪に", 262667, 266994);
-            generateLyrics("そっと手を伸ばした", 266994, 269994);
-            generateLyrics("白い闇を愛せるように", 269994, 273686);
-            generateLyrics("マイナスの世界で踊り続ける", 273686, 281532);
-            generateLyrics("一縷の望みも", 281532, 282917);
-            generateLyrics("かき消す", 282917, 283609);
-            generateLyrics("ノイズと", 283609, 285224);
-            generateLyrics("遠退く意識に", 285224, 286609);
-            generateLyrics("悪魔の手招き", 286609, 287994);
-            generateLyrics("Whiteout", 287994, 289840);
+            generateLyricsChorus("視界ゼロの中あなたと", 255225, 258917);
+            generateLyricsChorus("繋いだ手の温もりが恋しくて", 258917, 262667);
+            generateLyricsChorus("滔々と降り積もる雪に", 262667, 266994);
+            generateLyricsChorus("そっと手を伸ばした", 266994, 269994);
+            generateLyricsChorus("白い闇を愛せるように", 269994, 273686);
+            generateLyricsChorus("マイナスの世界で踊り続ける", 273686, 281532);
+
+
+            fillLyrics("一縷の望みも", 281532, (109148 - 108917)/3, 282917, 40);
+            fillLyrics("かき消す", 282917, (109148 - 108917)/2, 283609, 65);
+            fillLyrics("ノイズと", 283609, (109148 - 108917)/2, 285224, 65);
+            fillLyrics("遠退く意識に", 285224, (109148 - 108917)/2, 286609, 40);
+            fillLyrics("悪魔の手招き", 286609, (109148 - 108917)/2, 287994, 40);
+            fillLyrics("Whiteout", 287994, 113533, 289840);
 
             
         }
@@ -236,6 +248,27 @@ namespace StorybrewScripts
             GenerateBackgroundLyrics(text, startTime, endTime);
             GenerateFrontLyrics(text, startTime, endTime);
             
+
+        }
+        void generateUnderlayLyrics(string text, int startTime, int endTime)
+        {
+            StoryboardLayer mid = GetLayer("Mid Song Underlay");
+            FontTexture texture1 = fontGenerator2.GetTexture(text + "--"),
+                        texture2 = fontGenerator2.GetTexture("--" + text);
+            
+            OsbSprite p = mid.CreateSprite(texture1.Path, OsbOrigin.TopLeft);
+            p.Fade(OsbEasing.InBounce, startTime, startTime + BeatDuration, 0, 0.4);
+            p.Fade(OsbEasing.InBounce, endTime - BeatDuration, endTime, 0.4, 0);
+            p.Scale(startTime, 0.4);
+            p.Additive(startTime);
+            p.Move(startTime, -107, 40);
+
+            p = mid.CreateSprite(texture2.Path, OsbOrigin.BottomRight);
+            p.Fade(OsbEasing.InBounce, startTime, startTime + BeatDuration, 0, 0.4);
+            p.Fade(OsbEasing.InBounce, endTime - BeatDuration, endTime, 0.4, 0);
+            p.Scale(startTime, 0.4);
+            p.Additive(startTime);
+            p.Move(startTime, 747, 440);
 
         }
 
@@ -344,7 +377,7 @@ namespace StorybrewScripts
 
         }
 
-        void fillLyrics(string text, int startTime, int perBeat, int endTime){
+        void fillLyrics(string text, int startTime, int perBeat, int endTime, int dy = 130){
 
             var delay = 0;
             var addedY = 0;
@@ -368,7 +401,7 @@ namespace StorybrewScripts
                     line.Rotate(startTime + delay, Random(-Math.PI / 10, Math.PI / 10));
 
                     delay += perBeat;
-                    addedY += 130;
+                    addedY += dy;
                     addedX *= -1;
                 }
             }
@@ -508,7 +541,7 @@ namespace StorybrewScripts
             
             LyricGroup group = GetLyricGroup(text, fontGenerator);
 
-            double width = group.TotalWidth;
+            double width = group.TotalWidth*0.75;
             FontTexture startTexture = group.Textures[0];
             
 

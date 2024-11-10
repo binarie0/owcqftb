@@ -154,7 +154,7 @@ namespace StorybrewScripts
 
                 var numOfLoops = Random(6, 10);
                 var perLoop = (endTime - startTime) / numOfLoops;
-                particle.StartLoopGroup(startTime + delay, numOfLoops);
+                particle.StartLoopGroup(startTime - delay, numOfLoops + 1);
                 particle.Rotate(0, perLoop, 0, - Math.PI);
                 particle.MoveX(OsbEasing.InSine, 0, perLoop / 2, startingPosX, 320);
                 particle.MoveX(OsbEasing.OutSine,perLoop / 2, perLoop, 320, endingPosX);
@@ -164,8 +164,8 @@ namespace StorybrewScripts
 
                 particle.ScaleVec(startTime, 0.1, 0.2);
                 particle.Additive(startTime, endTime);
-                particle.Fade(startTime, 1);
-                particle.Fade(endTime, 0);
+                particle.Fade(startTime, startTime, 0, 1);
+                particle.Fade(endTime, endTime, 1, 0);
 
                 delay += 100;
             }
@@ -194,11 +194,16 @@ namespace StorybrewScripts
             var checkpoint4 = startTime + 105225 - 82956;
             var checkpoint5 = startTime + 108917 - 82956;
             
+            if (startTime > 120000)
+            {
+
+            
             checkpoint1 -= 116;
              checkpoint2 -= 116;
               checkpoint3 -= 116;
                checkpoint4 -= 116;
                 checkpoint5 -= 116;
+            }
             
 
 
