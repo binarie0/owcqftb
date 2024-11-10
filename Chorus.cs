@@ -33,12 +33,48 @@ namespace StorybrewScripts
         public override void Generate()
         {
 		    
+            
             ChorusPart1(82956);
             
             RainbowParticle(82956, 90456);
             RainbowParticle(97725, 108917);
 
             fill1(95763);
+
+            ChorusPart1(255687, 1);
+
+            fill1(268378);
+            fill2();
+        }
+
+        void fill2()
+        {
+            int startTime = 281532, endTime = 290648;
+            double BeatDuration = Beatmap.GetTimingPointAt(startTime).BeatDuration;
+            StoryboardLayer layer = GetLayer("Chorus BACK");
+
+            OsbSprite bg = layer.CreateSprite("sb/bg/background2.jpg", OsbOrigin.Centre);
+            bg.Fade(startTime, 1);
+            bg.Fade(endTime, 0);
+            bg.Scale(startTime, 0.5);
+
+            OsbAnimation grain = layer.CreateAnimation("sb/grain2/g.jpg", 6, BeatDuration*0.5, OsbLoopType.LoopForever);
+            grain.Fade(startTime, 0.2);
+            grain.Fade(endTime, 0);
+            OsbSprite vignette = layer.CreateSprite("sb/vignette.png", OsbOrigin.Centre);
+            vignette.Fade(startTime, 1);
+            vignette.Fade(endTime, 0);
+            vignette.Scale(startTime, 0.5);
+            vignette.Color(startTime, Color4.Black);
+
+            OsbAnimation noise = layer.CreateAnimation("sb/noise/fc/n.jpg", 8, BeatDuration*0.25, OsbLoopType.LoopForever);
+            noise.Fade(284301, 284417, 0.1, 0);
+            noise.Fade(284417, 284417 + BeatDuration, 0.1, 0);
+            noise.Fade(284648, 285224, 0.2, 0.2);
+
+            OsbSprite cover = layer.CreateSprite("sb/1px.png", OsbOrigin.Centre);
+            cover.Fade(289840, endTime, 0, 0.6);
+            cover.ScaleVec(289840, 854, 480);
             
         }
 
@@ -140,7 +176,7 @@ namespace StorybrewScripts
         
 
 
-        void ChorusPart1(int startTime){
+        void ChorusPart1(int startTime, int readjustTime = -1){
             
             var layer = GetLayer("Chorus FRONT");
             var layerBack = GetLayer("Chorus BACK");
@@ -151,13 +187,18 @@ namespace StorybrewScripts
             var tree = layer.CreateSprite("sb/bg/bw/bg1fronttree.png");
             var grain = layer.CreateAnimation("sb/grain/g.jpg",10, 120, OsbLoopType.LoopForever, OsbOrigin.Centre);
 
-            
-
             var checkpoint1 = startTime + 90456 - 82956;
             var checkpoint2 = startTime + 95994 - 82956;
             var checkpoint3 = startTime + 97725 - 82956;
             var checkpoint4 = startTime + 105225 - 82956;
             var checkpoint5 = startTime + 108917 - 82956;
+            
+            checkpoint1 -= 116;
+             checkpoint2 -= 116;
+              checkpoint3 -= 116;
+               checkpoint4 -= 116;
+                checkpoint5 -= 116;
+            
 
 
             //Simple fade
